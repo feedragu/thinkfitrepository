@@ -1,8 +1,9 @@
 <?php 
-   $con = mysqli_connect("89.46.111.27", "Sql1006791", "177p047266" , "Sql1006791_4"); 
+  $con =  mysqli_connect("188.216.29.244", "root", "" , "thinkfit"); 
     // Check connection
         if (!$con) {
             die();
 			header('Location: .index.html');
         } 
+echo "gravida giovenca";
 ?>  
