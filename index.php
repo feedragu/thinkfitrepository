@@ -276,17 +276,13 @@ tr:hover{background-color:#f5f5f5}
     </div>
 
     <div class="container">
-      <label><b>Username</b></label>
-      <input type="text" placeholder="Inserisci Username" name="username">
-
+	  <label><b>Email</b></label>
+      <input type="email" placeholder="Inserisci Password" name="email">
+      
       <label><b>Password</b></label>
       <input type="password" placeholder="Inserisci Password" name="psw">
       
-       <label><b>Password di sicurezza</b></label>
-      <input type="password" placeholder="Inserisci Password" name="pswSicurezza">
-      
-       <label><b>Email</b></label>
-      <input type="email" placeholder="Inserisci Password" name="email">
+       
         
     </div>
 
