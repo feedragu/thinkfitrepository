@@ -220,7 +220,7 @@ tr:hover{background-color:#f5f5f5}
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
         <li> <button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">REGISTRATI</button></li>
-        <li><a href="#services">SERVICES</a></li>
+        <li><button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button></li>
         <li><a href="#portfolio">PORTFOLIO</a></li>
         <li><a href="#pricing">PRICING</a></li>
         <li><a href="#contact">CONTACT</a></li>
@@ -289,6 +289,32 @@ tr:hover{background-color:#f5f5f5}
     <div class="container" style="background-color:#f1f1f1">
       <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
       <button type="submit" class="psw" >Registrati</button>
+
+    </div>
+  </form>
+</div>
+
+<div id="id01" class="modal">
+  
+  <form class="modal-content animate" action="login.php" method="POST">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+    </div>
+
+    <div class="container">
+	  <label><b>Email</b></label>
+      <input type="email" placeholder="Inserisci Email" name="email">
+      
+      <label><b>Password</b></label>
+      <input type="password" placeholder="Inserisci Password" name="psw">
+      
+       
+        
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+      <button type="submit" class="psw" >Logga</button>
 
     </div>
   </form>
