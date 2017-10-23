@@ -1,4 +1,7 @@
 <html lang="en">
+<?php
+session_start();
+?>
 
 <head>
 	<title>Bootstrap Theme Company</title>
@@ -76,8 +79,7 @@
 		
 		input[type=button]:hover {
 			opacity: 0.8;
-		}		
-	
+		}
 	</style>
 </head>
 
@@ -85,6 +87,11 @@
 	<div class="jumbotron text-center">
 		<h1>Company</h1>
 		<p>Facendo schifo ogni giorno di meno</p>
+		<?php 
+		if(isset($_COOKIE["logRem"])) {
+		    echo "<p>Benvenuto</p>";
+		}
+		?>
 		<form class="form-inline" action="prova.php" method="POST">
 			<div class="input-group">
 				<input type="email" class="form-control" size="50" placeholder="Email Address">
@@ -178,7 +185,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Chiudi</button>
-					
+
 				</div>
 			</div>
 

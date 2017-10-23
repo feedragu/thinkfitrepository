@@ -8,6 +8,8 @@ if ( !$con ) {
 	header( 'Location: .index.html' );
 }
 
+
+
 mysqli_select_db( $con, "thinkfit" );
 
 $sql = "SELECT idaccounts, email, password, tipo_account FROM `accounts` WHERE email='" . $_POST[ "email" ] . "' ";
@@ -27,20 +29,25 @@ if ( mysqli_num_rows( $result ) > 0 ) {
 		$_SESSION[ 'email' ] = $_POST[ "email" ];
 		$_SESSION[ "ida" ] = $idAcc;
 		$_SESSION[ "tipoAcc" ] = $type;
-		
-		print_r($_SESSION);
-		
+
+		if ( isset( $_POST[ 'check' ] ) ) {
+			$cookie_name = "logRem";
+			$cookie_value = $idAcc;
+			setcookie( $cookie_name, $cookie_value, time() + ( 86400 * 30 ), "/" ); // 86400 = 1 day
+
+		}
+
 		echo "<script language=javascript>alert('Benvenuto!')</script>";
 		echo "<script>setTimeout(\"location.href = 'index.php';\",1);</script>";
 
 		mysqli_close( $con );
-		
+
 	} else {
-		echo "<script language=javascript>alert('".$psw_control."')</script>";
+		echo "<script language=javascript>alert('" . $psw_control . "')</script>";
 		echo "<script>setTimeout(\"location.href = 'index.php';\",1);</script>";
-		
+
 		mysqli_close( $con );
-		
+
 	}
 
 
