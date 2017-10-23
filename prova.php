@@ -1,4 +1,17 @@
 <?php
+
+//algoritmo generazione codice
+
+function random_str($length, $keyspace = '0123456789')
+{
+    $str = '';
+    $max = mb_strlen($keyspace, '8bit') - 1;
+    for ($i = 0; $i < $length; ++$i) {
+        $str .= $keyspace[random_int(0, $max)];
+    }
+    return $str;
+}
+
 $con = mysqli_connect( "localhost:3306", "root", "test", "thinkfit" );
 // Check connection
 if ( !$con ) {
@@ -15,6 +28,7 @@ if ( mysqli_num_rows( $result ) > 0 )
 	}
 echo "\n";
 
+//test codice
 for ( $i = 0; $i < 200; $i++ ) {
 	$value = random_str( 11 );
 	echo $value . "\n";
