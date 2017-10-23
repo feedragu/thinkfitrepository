@@ -1,7 +1,6 @@
 <?php
 session_start(); // dive essere la prima cosa nella pagina, aprire la sessione
-include( "db_connect.php" ); // includo il file di connessione al database
-
+include("db_connect.php");
 function random_str($length, $keyspace = '0123456789')
 {
     $str = '';
@@ -13,9 +12,9 @@ function random_str($length, $keyspace = '0123456789')
 }
 
 if ( $_POST[ "psw" ] != "" && $_POST[ "email" ] != "" ) { // se i parametri iscritto non sono vuoti non sono vuote
-	$query_registrazione = mysql_query( "INSERT INTO accounts (idaccounts, email, password, tipo_account)
+	$query_registrazione = mysqli_query($con, "INSERT INTO accounts (idaccounts, email, password, tipo_account)
 VALUES ('".random_str(11)."','" . $_POST[ "email" ] . "','" . $_POST[ "psw" ] . "','U')" ) // scrivo sul DB questi valori
-	or die( "query di registrazione non riuscita" . mysql_error() ); // se la query fallisce mostrami questo errore
+	or die( "query di registrazione non riuscita" . mysqli_error() ); // se la query fallisce mostrami questo errore
 } else {
 	header( 'location:index.php' ); // se le prime condizioni non vanno bene entra in questo ramo else
 }
@@ -25,4 +24,5 @@ if ( isset( $query_registrazione ) ) { //se la reg è andata a buon fine
 } else {
 	echo "non ti sei registrato con successo"; // altrimenti esce scritta a video questa stringa
 }
+echo "culo";
 ?>
