@@ -28,10 +28,6 @@ if ( mysqli_num_rows( $result ) > 0 )
 	}
 echo "\n";
 
-//test codice
-for ( $i = 0; $i < 1000; $i++ ) {
-	$value = random_str( 11 );
-	echo $value . "\n";
-}
+
 
 ?>
