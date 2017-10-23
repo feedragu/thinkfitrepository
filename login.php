@@ -24,9 +24,11 @@ if ( mysqli_num_rows( $result ) > 0 ) {
 
 	if ( $psw_control == $_POST[ "psw" ] ) {
 
-		$_SESSION[ "email" ] = $_POST[ "email" ];
+		$_SESSION[ 'email' ] = $_POST[ "email" ];
 		$_SESSION[ "ida" ] = $idAcc;
 		$_SESSION[ "tipoAcc" ] = $type;
+		
+		print_r($_SESSION);
 		
 		echo "<script language=javascript>alert('Benvenuto!')</script>";
 		echo "<script>setTimeout(\"location.href = 'index.php';\",1);</script>";
@@ -44,7 +46,7 @@ if ( mysqli_num_rows( $result ) > 0 ) {
 
 } else {
 	echo "<script language=javascript>alert('Username e/o Password errati! ')</script>";
-	echo "<script>setTimeout(\"location.href = 'calcolo_data.php';\",1);</script>";
+	echo "<script>setTimeout(\"location.href = 'index.php';\",1);</script>";
 	mysqli_close( $con );
 }
 
