@@ -5,6 +5,6 @@
             die();
 			header('Location: .index.html');
         } 
-echo "Benvenuto!";
+
 mysqli_select_db($con, "thinkfit");
 ?>
