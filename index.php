@@ -4,7 +4,7 @@ session_start();
 ?>
 
 <head>
-	<title>Bootstrap Theme Company</title>
+	<title>Thinkfit</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -443,7 +443,6 @@ session_start();
 			var email = document.getElementById( 'emailLog' ).value;
 			var pass = document.getElementById( 'pswLog' ).value;
 			var check = document.getElementById( 'checkLog' ).value;
-			alert("funzia");
 			if ( email == "" || pass == "" ) {
 				alert( "Errore nell'inserimento\nI dati inseriti non sono corretti" );
 				return;
@@ -458,7 +457,6 @@ session_start();
 				}
 				xmlhttp.onreadystatechange = function () {
 					if ( this.readyState == 4 && this.status == 200 ) {
-						alert( this.responseText );
 						document.getElementById( "txtHint" ).innerHTML = this.responseText;
 					}
 				};
@@ -472,7 +470,6 @@ session_start();
 
 			var email = document.getElementById( 'emailReg' ).value;
 			var pass = document.getElementById( 'pswReg' ).value;
-			alert("funzia");
 			if ( email == "" || pass == "" ) {
 				alert( "Errore nell'inserimento\nI dati inseriti non sono corretti" );
 				return;
@@ -487,7 +484,6 @@ session_start();
 				}
 				xmlhttp.onreadystatechange = function () {
 					if ( this.readyState == 4 && this.status == 200 ) {
-						alert( this.responseText );
 						document.getElementById( "txtHint" ).innerHTML = this.responseText;
 					}
 				};
