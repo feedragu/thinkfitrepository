@@ -39,8 +39,6 @@
 		input[type=button] {
 			background-color: #4CAF50;
 			color: white;
-			padding: 14px 20px;
-			margin: 8px 0;
 			border: none;
 			cursor: pointer;
 			width: auto;
@@ -57,10 +55,12 @@
 
 <?php
 session_start();
+
 session_unset();
+
 session_start();
-$_SESSION['loggedOut']=true;
 
-echo "<li><button type='button' data-toggle='modal'  data-target='#myModalLog'>LOGIN</button></li>";
+$_SESSION['loggedOut']=0;
 
+echo "<button type='button' data-toggle='modal' data-target='#myModalLog'>LOGIN</button>";
 ?>

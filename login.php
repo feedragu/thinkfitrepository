@@ -12,7 +12,7 @@ if ( !$con ) {
 
 mysqli_select_db( $con, "thinkfit" );
 
-$sql = "SELECT idaccounts, email, password, tipo_account FROM `accounts` WHERE email='" . $_POST[ "email" ] . "' ";
+$sql = "SELECT idaccounts, email, password, tipo_account FROM `accounts` WHERE email='" . $_GET[ "email" ] . "' ";
 
 $result = mysqli_query( $con, $sql );
 $psw_control = "";
@@ -24,27 +24,27 @@ if ( mysqli_num_rows( $result ) > 0 ) {
 		$type = $row[ 3 ];
 	}
 
-	if ( $psw_control == $_POST[ "psw" ] ) {
+	if ( $psw_control == $_GET[ "psw" ] ) {
 
-		$_SESSION[ 'email' ] = $_POST[ "email" ];
+		$_SESSION[ 'email' ] = $_GET[ "email" ];
 		$_SESSION[ "ida" ] = $idAcc;
 		$_SESSION[ "tipoAcc" ] = $type;
 
-		if ( isset( $_POST[ 'check' ] ) ) {
+		if ( isset( $_GET[ 'check' ] ) ) {
 			$cookie_name = "logRem";
 			$cookie_value = $idAcc;
 			setcookie( $cookie_name, $cookie_value, time() + ( 86400 * 30 ), "/" ); // 86400 = 1 day
 
 		}
+		
+		$_SESSION['loggedOut']=1;
 
-		echo "<script language=javascript>alert('Benvenuto!')</script>";
-		echo "<script>setTimeout(\"location.href = 'index.php';\",1);</script>";
+		echo "<button onclick='logout()'>LOGOUT</button>";
 
 		mysqli_close( $con );
 
 	} else {
-		echo "<script language=javascript>alert('" . $psw_control . "')</script>";
-		echo "<script>setTimeout(\"location.href = 'index.php';\",1);</script>";
+		echo "<button onclick='logout()'>LOGOUT</button>";
 
 		mysqli_close( $con );
 
@@ -52,8 +52,7 @@ if ( mysqli_num_rows( $result ) > 0 ) {
 
 
 } else {
-	echo "<script language=javascript>alert('Username e/o Password errati! ')</script>";
-	echo "<script>setTimeout(\"location.href = 'index.php';\",1);</script>";
+	echo "<button onclick='logout()'>LOGOUT</button>";
 	mysqli_close( $con );
 }
 

@@ -108,10 +108,12 @@ session_start();
 				<ul class="nav navbar-nav navbar-right">
 					<li> <button type="button" data-toggle="modal" data-target="#myModalReg">REGISTRATI</button>
 					</li>
-					<?php 
-					if(isset($_COOKIE["logRem"]) && !isset($_SESSION['loggedOut'])) {
+					<?php 					
+					
+					if(isset($_COOKIE["logRem"])   ) {
+						if(!isset($_SESSION['loggedOut'])) {
 					   ?>
-					<li><button id="txtHint" onclick="logout()">LOGOUT</button>
+					<li id="txtHint"><button onclick="logout()">LOGOUT</button>
 					</li>
 
 
@@ -142,14 +144,53 @@ session_start();
 									$_SESSION[ "ida" ] = $idAcc;
 									$_SESSION[ "tipoAcc" ] = $type;
 								}
-					}else {
-						alert(print_r($_SESSION));
-					?>
+						}else {
+							if($_SESSION['loggedOut']==1){
+								
+								?>
+					<li id="txtHint"><button onclick="logout()">LOGOUT</button>
+					</li>
+
+
+					<?php 
+							}else{
+								
+							?>
+
 					<li id="txtHint"><button data-toggle="modal" data-target="#myModalLog">LOGIN</button>
 					</li>
 
 					<?php 
-		}
+							}
+					} 
+				}else {
+						if(!isset($_SESSION['loggedOut'])) {
+					?>
+
+					<li id="txtHint"><button data-toggle="modal" data-target="#myModalLog">LOGIN</button>
+					</li>
+
+					<?php 
+						}else {
+							if($_SESSION['loggedOut']==1){
+								
+								?>
+					<li id="txtHint"><button onclick="logout()">LOGOUT</button>
+					</li>
+
+
+					<?php 
+							}else{
+								
+							?>
+
+					<li id="txtHint"><button data-toggle="modal" data-target="#myModalLog">LOGIN</button>
+					</li>
+
+					<?php 
+							}
+						}
+					}
 		?>
 
 					<li><a href="#portfolio">PORTFOLIO</a>
@@ -281,20 +322,11 @@ session_start();
 
 
 
-
-
-
-
 		<a class="right carousel-control" href="#theCarousel" data-slide="next">
     <span class="glyphicon glyphicon-chevron-right"></span>
     <span class="sr-only">Next</span>
   </a>
 	
-
-
-
-
-
 
 
 
@@ -351,20 +383,19 @@ session_start();
 					<h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
 				</div>
 				<div class="modal-body" style="padding:40px 50px;">
-					<form action="login.php" method="POST" role="form">
-						<div class="form-group">
-							<label for="usrname"><span class="glyphicon glyphicon-user"></span> Email</label>
-							<input type="text" class="form-control" id="usrname" name="email" placeholder="Enter email">
-						</div>
-						<div class="form-group">
-							<label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-							<input type="password" class="form-control" id="psw" name="psw" placeholder="Enter password">
-						</div>
-						<div class="checkbox">
-							<label><input type="checkbox" value="" name="check" checked>Remember me</label>
-						</div>
-						<button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
-					</form>
+					<div class="form-group">
+						<label for="usrname"><span class="glyphicon glyphicon-user"></span> Email</label>
+						<input type="text" class="form-control" id="emailLog" name="email" placeholder="Enter email">
+					</div>
+					<div class="form-group">
+						<label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+						<input type="password" class="form-control" id="pswLog" name="psw" placeholder="Enter password">
+					</div>
+					<div class="checkbox">
+						<label><input type="checkbox" value="" id="checkLog" name="check">Remember me</label>
+					</div>
+					<button class="btn btn-success btn-block" onclick="login()" data-dismiss="modal"><span class="glyphicon glyphicon-off" ></span> Login</button>
+
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
@@ -403,6 +434,7 @@ session_start();
 			xmlhttp.onreadystatechange = function () {
 
 				if ( this.readyState == 4 && this.status == 200 ) {
+
 					document.getElementById( "txtHint" ).innerHTML = this.responseText;
 
 				}
@@ -412,27 +444,38 @@ session_start();
 
 		}
 
-		function cancellaRiga( str ) {
-			var id = document.getElementById( str ).value;
+		function myFunction( str ) {
+			alert( str );
+		}
 
-			if ( window.XMLHttpRequest ) {
-				// code for IE7+, Firefox, Chrome, Opera, Safari
-				xmlhttp = new XMLHttpRequest();
+		function login() {
+
+			var email = document.getElementById( 'emailLog' ).value;
+			var pass = document.getElementById( 'pswLog' ).value;
+			var check = document.getElementById( 'checkLog' ).value;
+			alert("funzia");
+			if ( email == "" || pass == "" ) {
+				alert( "Errore nell'inserimento\nI dati inseriti non sono corretti" );
+				return;
 			} else {
-				// code for IE6, IE5
-				xmlhttp = new ActiveXObject( "Microsoft.XMLHTTP" );
-			}
-			xmlhttp.onreadystatechange = function () {
-				if ( this.readyState == 4 && this.status == 200 ) {
-					document.getElementById( "txtHint" ).innerHTML = this.responseText;
+
+				if ( window.XMLHttpRequest ) {
+					// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp = new XMLHttpRequest();
+				} else {
+					// code for IE6, IE5
+					xmlhttp = new ActiveXObject( "Microsoft.XMLHTTP" );
 				}
-			};
-			if ( confirm( 'Sei sicuro di voler cancellare il progetto?' ) ) {
-				xmlhttp.open( "GET", "cancella_progetto.php?id_account=" + id, true );
+				xmlhttp.onreadystatechange = function () {
+					if ( this.readyState == 4 && this.status == 200 ) {
+						alert( this.responseText );
+						document.getElementById( "txtHint" ).innerHTML = this.responseText;
+					}
+				};
+				xmlhttp.open( "GET", "login.php?email=" + email + "&psw=" + pass + "&check=" + check, true );
 				xmlhttp.send();
-			} else {
-
 			}
+
 
 
 		}
