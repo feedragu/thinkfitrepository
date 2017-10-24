@@ -317,21 +317,11 @@ session_start();
   </a>
 	
 
-
-
-
-
-
 		<a class="right carousel-control" href="#theCarousel" data-slide="next">
     <span class="glyphicon glyphicon-chevron-right"></span>
     <span class="sr-only">Next</span>
   </a>
 	
-
-
-
-
-
 	</div>
 
 	<div class="container-fluid">
@@ -357,13 +347,13 @@ session_start();
 					<form action="registrazione.php" method="POST" role="form">
 						<div class="form-group">
 							<label for="usrname"><span class="glyphicon glyphicon-user"></span> Email</label>
-							<input type="text" class="form-control" id="usrname" name="email" placeholder="Enter email">
+							<input type="text" class="form-control" id="emailReg" name="email" placeholder="Enter email">
 						</div>
 						<div class="form-group">
 							<label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-							<input type="password" class="form-control" id="psw" name="psw" placeholder="Enter password">
+							<input type="password" class="form-control" id="pswReg" name="psw" placeholder="Enter password">
 						</div>
-						<button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Registrati</button>
+						<button type="submit" class="btn btn-success btn-block" onclick="reg()" data-dismiss="modal"><span class="glyphicon glyphicon-off"></span> Registrati</button>
 					</form>
 				</div>
 				<div class="modal-footer">
@@ -473,6 +463,35 @@ session_start();
 					}
 				};
 				xmlhttp.open( "GET", "login.php?email=" + email + "&psw=" + pass + "&check=" + check, true );
+				xmlhttp.send();
+			}
+
+		}
+		
+		function reg() {
+
+			var email = document.getElementById( 'emailReg' ).value;
+			var pass = document.getElementById( 'pswReg' ).value;
+			alert("funzia");
+			if ( email == "" || pass == "" ) {
+				alert( "Errore nell'inserimento\nI dati inseriti non sono corretti" );
+				return;
+			} else {
+
+				if ( window.XMLHttpRequest ) {
+					// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp = new XMLHttpRequest();
+				} else {
+					// code for IE6, IE5
+					xmlhttp = new ActiveXObject( "Microsoft.XMLHTTP" );
+				}
+				xmlhttp.onreadystatechange = function () {
+					if ( this.readyState == 4 && this.status == 200 ) {
+						alert( this.responseText );
+						document.getElementById( "txtHint" ).innerHTML = this.responseText;
+					}
+				};
+				xmlhttp.open( "GET", "registrazione.php?email=" + email + "&psw=" + pass, true );
 				xmlhttp.send();
 			}
 
