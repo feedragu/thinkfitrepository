@@ -10,6 +10,7 @@ session_start();
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 	<style>
 		.modal-header,
 		h4,
@@ -87,11 +88,7 @@ session_start();
 	<div class="jumbotron text-center">
 		<h1>Company</h1>
 		<p>Facendo schifo ogni giorno di meno</p>
-		<?php 
-		if(isset($_COOKIE["logRem"])) {
-		    echo "<p>Benvenuto</p>";
-		}
-		?>
+
 		<form class="form-inline" action="prova.php" method="POST">
 			<div class="input-group">
 				<input type="email" class="form-control" size="50" placeholder="Email Address">
@@ -111,8 +108,49 @@ session_start();
 				<ul class="nav navbar-nav navbar-right">
 					<li> <button type="button" data-toggle="modal" data-target="#myModalReg">REGISTRATI</button>
 					</li>
-					<li><button type="button" data-toggle="modal" data-target="#myModalLog">Login</button>
+					<?php 
+		if(isset($_COOKIE["logRem"])) {
+		   ?>
+					<li><button id="txtHint" onclick="logout()">LOGOUT</button>
 					</li>
+
+
+					<?php 
+					$con = mysqli_connect( "localhost:3306", "root", "test", "thinkfit" );
+					// Check connection
+					if ( !$con ) {
+						die();
+						header( 'Location: .index.html' );
+					}
+
+					mysqli_select_db( $con, "thinkfit" );
+
+					$sql = "SELECT idaccounts, email, password, tipo_account FROM `accounts` WHERE idaccounts='" . $_COOKIE["logRem"] . "' ";
+
+					$result = mysqli_query( $con, $sql );
+					$psw_control = "";
+					$idAcc = "";
+					if ( mysqli_num_rows( $result ) > 0 ) {
+						while ( $row = mysqli_fetch_row( $result ) ) {
+							$email=$row[ 1 ];
+							$psw_control = $row[ 2 ];
+							$idAcc = $row[ 0 ];
+							$type = $row[ 3 ];
+						}
+						
+						$_SESSION[ 'email' ] = $email;
+						$_SESSION[ "ida" ] = $idAcc;
+						$_SESSION[ "tipoAcc" ] = $type;
+					}
+		}else {
+					?>
+					<li><button type="button" data-toggle="modal" id="txtHint" data-target="#myModalLog">LOGIN</button>
+					</li>
+
+					<?php 
+		}
+		?>
+
 					<li><a href="#portfolio">PORTFOLIO</a>
 					</li>
 					<li><a href="#pricing">PRICING</a>
@@ -237,11 +275,27 @@ session_start();
   </a>
 	
 
+
+
+
+
+
+
+
+
 		<a class="right carousel-control" href="#theCarousel" data-slide="next">
     <span class="glyphicon glyphicon-chevron-right"></span>
     <span class="sr-only">Next</span>
   </a>
 	
+
+
+
+
+
+
+
+
 
 	</div>
 
@@ -333,6 +387,54 @@ session_start();
 		</div>
 	</div>
 	<div id="googleMap" style="height:400px;width:100%;"></div>
+	<script>
+		function logout( ) {
+			
+			if ( window.XMLHttpRequest ) {
+				// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp = new XMLHttpRequest();
+			} else {
+				// code for IE6, IE5
+				xmlhttp = new ActiveXObject( "Microsoft.XMLHTTP" );
+			}
+			xmlhttp.onreadystatechange = function () {
+
+				if ( this.readyState == 4 && this.status == 200 ) {
+					document.getElementById( "txtHint" ).innerHTML = this.responseText;
+					alert( this.responseText );
+				}
+			};
+			alert( "prova");
+			xmlhttp.open( "GET", "logout.php?id=5", true );
+			xmlhttp.send();
+		
+		}
+
+		function cancellaRiga( str ) {
+			var id = document.getElementById( str ).value;
+
+			if ( window.XMLHttpRequest ) {
+				// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp = new XMLHttpRequest();
+			} else {
+				// code for IE6, IE5
+				xmlhttp = new ActiveXObject( "Microsoft.XMLHTTP" );
+			}
+			xmlhttp.onreadystatechange = function () {
+				if ( this.readyState == 4 && this.status == 200 ) {
+					document.getElementById( "txtHint" ).innerHTML = this.responseText;
+				}
+			};
+			if ( confirm( 'Sei sicuro di voler cancellare il progetto?' ) ) {
+				xmlhttp.open( "GET", "cancella_progetto.php?id_account=" + id, true );
+				xmlhttp.send();
+			} else {
+
+			}
+
+
+		}
+	</script>
 	<script>
 		// Instantiate the Bootstrap carousel
 		$( '.multi-item-carousel' ).carousel( {
