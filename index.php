@@ -109,42 +109,43 @@ session_start();
 					<li> <button type="button" data-toggle="modal" data-target="#myModalReg">REGISTRATI</button>
 					</li>
 					<?php 
-		if(isset($_COOKIE["logRem"])) {
-		   ?>
+					if(isset($_COOKIE["logRem"]) && !isset($_SESSION['loggedOut'])) {
+					   ?>
 					<li><button id="txtHint" onclick="logout()">LOGOUT</button>
 					</li>
 
 
 					<?php 
-					$con = mysqli_connect( "localhost:3306", "root", "test", "thinkfit" );
-					// Check connection
-					if ( !$con ) {
-						die();
-						header( 'Location: .index.html' );
-					}
+								$con = mysqli_connect( "localhost:3306", "root", "test", "thinkfit" );
+								// Check connection
+								if ( !$con ) {
+									die();
+									header( 'Location: .index.html' );
+								}
 
-					mysqli_select_db( $con, "thinkfit" );
+								mysqli_select_db( $con, "thinkfit" );
 
-					$sql = "SELECT idaccounts, email, password, tipo_account FROM `accounts` WHERE idaccounts='" . $_COOKIE["logRem"] . "' ";
+								$sql = "SELECT idaccounts, email, password, tipo_account FROM `accounts` WHERE idaccounts='" . $_COOKIE["logRem"] . "' ";
 
-					$result = mysqli_query( $con, $sql );
-					$psw_control = "";
-					$idAcc = "";
-					if ( mysqli_num_rows( $result ) > 0 ) {
-						while ( $row = mysqli_fetch_row( $result ) ) {
-							$email=$row[ 1 ];
-							$psw_control = $row[ 2 ];
-							$idAcc = $row[ 0 ];
-							$type = $row[ 3 ];
-						}
-						
-						$_SESSION[ 'email' ] = $email;
-						$_SESSION[ "ida" ] = $idAcc;
-						$_SESSION[ "tipoAcc" ] = $type;
-					}
-		}else {
+								$result = mysqli_query( $con, $sql );
+								$psw_control = "";
+								$idAcc = "";
+								if ( mysqli_num_rows( $result ) > 0 ) {
+									while ( $row = mysqli_fetch_row( $result ) ) {
+										$email=$row[ 1 ];
+										$psw_control = $row[ 2 ];
+										$idAcc = $row[ 0 ];
+										$type = $row[ 3 ];
+									}
+
+									$_SESSION[ 'email' ] = $email;
+									$_SESSION[ "ida" ] = $idAcc;
+									$_SESSION[ "tipoAcc" ] = $type;
+								}
+					}else {
+						alert(print_r($_SESSION));
 					?>
-					<li><button type="button" data-toggle="modal" id="txtHint" data-target="#myModalLog">LOGIN</button>
+					<li id="txtHint"><button data-toggle="modal" data-target="#myModalLog">LOGIN</button>
 					</li>
 
 					<?php 
@@ -403,13 +404,10 @@ session_start();
 
 				if ( this.readyState == 4 && this.status == 200 ) {
 					document.getElementById( "txtHint" ).innerHTML = this.responseText;
-					
 
-				} else {
-					alert(  this.statusText );
 				}
 			};
-			xmlhttp.open( "GET", "logout.php?id=5", true );
+			xmlhttp.open( "GET", "logout.php", true );
 			xmlhttp.send();
 
 		}
