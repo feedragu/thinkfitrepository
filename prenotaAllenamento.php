@@ -226,9 +226,9 @@ include( 'db_connect.php' )
 		<h3>Prenota Allenamento</h3><br>
 		<div class="row">
 		<?php
-			$result = mysqli_query($con, "SELECT nome, cognome, picture FROM users, accounts WHERE idaccounts=iduser AND tipo_account='PT'");
+			$result = mysqli_query($con, "SELECT nome, cognome, picture, iduser FROM users, accounts WHERE idaccounts=iduser AND tipo_account='PT'");
 			while($row = mysqli_fetch_row($result)){
-				echo "<div class='col-sm-4'>";
+				echo "<div class='col-sm-4' onclick=window.location='showUser.php?id=".$row[3]."'>";
 				echo "<img src='".$row[2]."' class='img-responsive' style='height:300px; width=400px' alt='Image'>";
 				echo "<p>".$row[0]." ".$row[1]."</p></div>";
 			}
