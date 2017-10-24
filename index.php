@@ -150,7 +150,101 @@ session_start();
 				margin: 25px 0;
 			}
 		}
+		
+		.myCarousel {
+			.carousel-inner {
+				> .item {
+					transition: 500ms ease-in-out left;
+				}
+				.active {
+					&.left {
+						left: -30%;
+					}
+					&.right {
+						left: 33%;
+					}
+				}
+				.next {
+					left: 33%;
+				}
+				.prev {
+					left: -33%;
+				}
+				@media all and (transform-3d),
+				(-webkit-transform-3d) {
+					> .item {
+						transition: 500ms ease-in-out left;
+						transition: 500ms ease-in-out all;
+						backface-visibility: visible;
+						transform: none!important;
+					}
+				}
+			}
+			.carouse-control {
+				&.left,
+				&.right {
+					background-image: none;
+				}
+			}
+		}
+		
+		.carousel-inner> .item> img,
+		.carousel-inner> .item> a> img {
+			width: 70%;
+			margin: auto;
+		}
 	</style>
+
+	<div id="theCarousel" class="carousel slide" data-ride="carousel">
+		<!-- Indicators -->
+		<ol class="carousel-indicators">
+			<li data-target="#theCarousel" data-slide-to="0" class="active"></li>
+			<li data-target="#theCarousel" data-slide-to="1"></li>
+			<li data-target="#theCarousel" data-slide-to="2"></li>
+		</ol>
+
+		<!-- Wrapper for slides -->
+		<div class="carousel-inner">
+			<div class="item active">
+				<img src="https://media-cdn.tripadvisor.com/media/photo-s/07/72/27/a3/chicago.jpg" alt="Chania">
+				<div class="carousel-caption">
+					<h3>Los Angeles</h3>
+					<p>LA is always so much fun!</p>
+				</div>
+			</div>
+
+			<div class="item">
+				<img src="http://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1446655168/chicago-header-dg1115.jpg?itok=MqZFOaTi" alt="Chicago">
+				<div class="carousel-caption">
+					<h3>Chicago</h3>
+					<p>Thank you, Chicago!</p>
+				</div>
+			</div>
+
+			<div class="item">
+				<img src="ny.jpg" alt="New York">
+				<div class="carousel-caption">
+					<h3>New York</h3>
+					<p>We love the Big Apple!</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Left and right controls -->
+		<a class="left carousel-control" href="#theCarousel" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+	
+
+		<a class="right carousel-control" href="#theCarousel" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+    <span class="sr-only">Next</span>
+  </a>
+	
+
+	</div>
+
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-8">
@@ -240,6 +334,27 @@ session_start();
 	</div>
 	<div id="googleMap" style="height:400px;width:100%;"></div>
 	<script>
+		// Instantiate the Bootstrap carousel
+		$( '.multi-item-carousel' ).carousel( {
+			interval: false
+		} );
+
+		// for every slide in carousel, copy the next slide's item in the slide.
+		// Do the same for the next, next item.
+		$( '.multi-item-carousel .item' ).each( function () {
+			var next = $( this ).next();
+			if ( !next.length ) {
+				next = $( this ).siblings( ':first' );
+			}
+			next.children( ':first-child' ).clone().appendTo( $( this ) );
+
+			if ( next.next().length > 0 ) {
+				next.next().children( ':first-child' ).clone().appendTo( $( this ) );
+			} else {
+				$( this ).siblings( ':first' ).children( ':first-child' ).clone().appendTo( $( this ) );
+			}
+		} );
+
 		function myMap() {
 			var myCenter = new google.maps.LatLng( 41.878114, -87.629798 );
 			var mapProp = {
