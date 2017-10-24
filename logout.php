@@ -1,10 +1,7 @@
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Documento senza titolo</title>
-</head>
+<?php
+session_start();
+session_unset();
 
-<body>
-</body>
-</html>
+echo "<button type='button' data-toggle='modal' id='txtHint' data-target='#myModalLog'>LOGIN</button>";
+
+?>

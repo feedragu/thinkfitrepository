@@ -283,11 +283,13 @@ session_start();
 
 
 
+
 		<a class="right carousel-control" href="#theCarousel" data-slide="next">
     <span class="glyphicon glyphicon-chevron-right"></span>
     <span class="sr-only">Next</span>
   </a>
 	
+
 
 
 
@@ -388,8 +390,8 @@ session_start();
 	</div>
 	<div id="googleMap" style="height:400px;width:100%;"></div>
 	<script>
-		function logout( ) {
-			
+		function logout() {
+
 			if ( window.XMLHttpRequest ) {
 				// code for IE7+, Firefox, Chrome, Opera, Safari
 				xmlhttp = new XMLHttpRequest();
@@ -401,13 +403,15 @@ session_start();
 
 				if ( this.readyState == 4 && this.status == 200 ) {
 					document.getElementById( "txtHint" ).innerHTML = this.responseText;
-					alert( this.responseText );
+					
+
+				} else {
+					alert(  this.statusText );
 				}
 			};
-			alert( "prova");
 			xmlhttp.open( "GET", "logout.php?id=5", true );
 			xmlhttp.send();
-		
+
 		}
 
 		function cancellaRiga( str ) {
