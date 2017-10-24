@@ -26,5 +26,4 @@ if ( isset( $query_registrazione ) ) {
 } else {
 	echo "non ti sei registrato con successo"; 
 }
-echo "culo";
 ?>

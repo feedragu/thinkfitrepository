@@ -19,7 +19,7 @@ $con = mysqli_connect( "localhost:3306", "root", "test", "thinkfit" );
 // Check connection
 if ( !$con ) {
 	die();
-	header( 'Location: .index.html' );
+	header( 'Location: .index.php' );
 }
 echo "Benvenuto!";
 mysqli_select_db( $con, "thinkfit" );
